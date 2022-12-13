@@ -1,0 +1,3 @@
+DROP DATABASE IF EXISTS pokeapp;
+
+CREATE DATABASE pokeapp;
