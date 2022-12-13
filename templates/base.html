@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ian's Pokeapp</title>
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap@5/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="./static/style.css">
+</head>
+
+<body>
+    <nav class="navbar-expand">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav navbar-right">
+                {% if g.user %}
+                <li>
+                    <form method="POST" action="/logout">
+                        {{ g.csrf_form.hidden_tag() }}
+                        <button class="btn btn-outline-dark">Log out</button>
+                    </form>
+
+                </li>
+                {% else %}
+                <li>
+                    <form method="POST" action="/login">
+                        <button class="btn btn-outline-dark">Login</button>
+                    </form>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        {% block content %}
+        {% endblock content %}
+    </div>
+</body>
+
+</html>
