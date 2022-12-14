@@ -12,7 +12,7 @@
     <h4>{{g.user.username}} has caught these pokemon</h4>
     <ul>
         {% for mon in pokemons %}
-        <li>{{ mon.name }}</li>
+        <li>{{ mon.name.capitalize() }} ------- Exp gained: {{ mon.exp }}</li>
         {% endfor %}
     </ul>
     {% else %}
@@ -22,9 +22,13 @@
 {% endblock %}
 {% block script %}
 <script>
+    /** Toggles the opportunity to catch pokemon 
+     *  Basically just hides and shows the catch modal
+     * 
+    */
     $(document).ready(function () {
         console.log("window is loaded");
-        
+
         setInterval(function(){
             let element = document.getElementById("catchModal");
             let hidden = element.getAttribute("hidden");

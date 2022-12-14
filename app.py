@@ -64,6 +64,7 @@ def login():
         if user:
             do_login(user)
             return redirect('/')
+
     return render_template('users/login.html', form=form)
 
 @app.post('/logout')
@@ -110,6 +111,8 @@ def homepage():
     else:
         return render_template('home-anon.html')
 
+##############################################################################
+# Catch route
 @app.get('/catch')
 def catch():
     """ Makes an api call to PokeApi
