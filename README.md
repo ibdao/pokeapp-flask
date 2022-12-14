@@ -11,8 +11,7 @@
 6. open application @ http:localhost:5000: $ flask run 
 
 #### Features and Inspiration
-This application is w.i.p while I job search.
-This application 
+This application is w.i.p while I job search. \n This application 
   -  is a static site
   -  features the ability to login/sign up and logout 
   -  using Flask WTForms and bcrypt authentication
