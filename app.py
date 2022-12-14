@@ -1,7 +1,9 @@
 import os
+import random
+import requests
 from dotenv import load_dotenv
-from flask import Flask, request, redirect, render_template, g, session, flash
-from models import db, connect_db, User
+from flask import Flask, redirect, render_template, g, session, flash, request
+from models import db, connect_db, User, Pokemon
 from forms import UserAddForm, CSRFProtection, LoginForm
 from sqlalchemy.exc import IntegrityError
 
@@ -18,6 +20,7 @@ connect_db(app)
 db.create_all()
 
 CURR_USER = "curr_user"
+API_URL = "https://pokeapi.co/api/v2/pokemon/"
 
 ############################################################################
 # User signup/login/logout
@@ -69,16 +72,6 @@ def logout():
 
     do_logout()
     return redirect('/')
-#############################################################################
-# Homepage routes
-
-@app.get("/")
-def homepage():
-    """Homepage of site; redirect to register."""
-    if g.user:
-        return render_template('home.html')
-    else:
-        return render_template('home-anon.html')
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -104,3 +97,45 @@ def signup():
         return redirect('/')
     else:
         return render_template('users/signup.html', form=form)
+#############################################################################
+# Homepage routes
+
+@app.get("/")
+def homepage():
+    """Homepage of site; redirect to register."""
+    if g.user:
+        pokemons = (Pokemon.query.filter(Pokemon.user_id == g.user.id).all())
+
+        return render_template('home.html', pokemons=pokemons)
+    else:
+        return render_template('home-anon.html')
+
+@app.get('/catch')
+def catch():
+    """ Makes an api call to PokeApi
+        Picks a random number to make the call 
+        Stores pokemon in the table and adds to user pokemon list
+
+        Redirects to homepage
+    """
+    number = random.randint(1, 350)
+    resp = requests.get(f'{API_URL}{number}')
+
+    pokemon_data = resp.json()
+    
+    pokemon = Pokemon(
+        id=pokemon_data["id"],
+        name=pokemon_data["name"],
+        exp=pokemon_data["base_experience"],
+    )
+    
+    db.session.add(pokemon)
+    g.user.pokemons.append(pokemon)
+
+    db.session.commit()
+
+
+    return redirect('/')
+
+
+

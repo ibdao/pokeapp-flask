@@ -11,7 +11,7 @@ class User(db.Model):
 
     id = db.Column(
         db.Integer,
-        primary_key = True
+        primary_key=True
     )
 
     username = db.Column(
@@ -30,7 +30,7 @@ class User(db.Model):
         default=0,
     )
 
-    # pokemons = db.relationship('Pokemon', backref='user')
+    pokemons = db.relationship('Pokemon', backref='user')
 
     @classmethod
     def signup(cls, username, password):
@@ -67,9 +67,31 @@ class User(db.Model):
         return False
 
 
-# class Pokemon(db.Model):
-#     """Pokemon in the system"""
-#     __tablename__ = 'pokemons'
+class Pokemon(db.Model):
+    """Pokemon in the system"""
+
+    __tablename__ = 'pokemons'
+
+    id = db.Column(
+        db.Integer,
+        primary_key=True 
+    )
+
+    name = db.Column(
+        db.Text,
+        nullable=False
+    )
+
+    exp = db.Column(
+        db.Integer
+    )
+
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey('users.id', ondelete='CASCADE')
+    )
+
+
 
 
 
