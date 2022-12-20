@@ -1,45 +1,47 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1 class="welcome-msg">Welcome {{ g.user.username }} </h1>
-<h6 class="player-exp">Total Exp: {{ g.user.total_exp }}</h6>
-<div class="catch-modal" id="catchModal">
-    <div class="modal-header">
-        <div class="modal-title">A wild pokemon appeared</div>
-        <a href="/catch" class="btn btn-outline-success"> Catch! </a>
+<div class="home">
+    <h1 class="welcome-msg">Welcome {{ g.user.username }} </h1>
+    <h6 class="player-exp">Total Exp: {{ g.user.total_exp }}</h6>
+    <div class="catch-modal" id="catchModal">
+        <div class="modal-header">
+            <div class="modal-title">A wild pokemon appeared</div>
+            <a href="/catch" class="btn btn-outline-success"> Catch! </a>
+        </div>
     </div>
-</div>
-<div class="pokemon-list">
-    {% if g.user.pokemons | length > 0%}
-    <h4>{{ g.user.username }} has caught these pokemon</h4>
-    <ul>
-        {% for mon in pokemons %}
-        <li>{{ mon.name.capitalize() }}<img src="{{ mon.sprite }}"> ------- Exp gained: {{ mon.exp }}</li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <div>{{ g.user.username }} has no pokemon</div>
-    {% endif %}
-</div>
-{% endblock %}
-{% block script %}
-<script>
-    /** Toggles the opportunity to catch pokemon 
-     *  Basically just hides and shows the catch modal
-     * 
-    */
-    $(document).ready(function () {
-        console.log("window is loaded");
+    <div class="pokemon-list">
+        {% if g.user.pokemons | length > 0%}
+        <h4>{{ g.user.username }} has caught these pokemon</h4>
+        <ul>
+            {% for mon in pokemons %}
+            <li>{{ mon.name.capitalize() }}<img src="{{ mon.sprite }}"> ------- Exp gained: {{ mon.exp }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <div>{{ g.user.username }} has no pokemon</div>
+        {% endif %}
+    </div>
+    {% endblock %}
+    {% block script %}
+    <script>
+        /** Toggles the opportunity to catch pokemon 
+         *  Basically just hides and shows the catch modal
+         * 
+        */
+        $(document).ready(function () {
+            console.log("window is loaded");
 
-        setInterval(function(){
-            let element = document.getElementById("catchModal");
-            let hidden = element.getAttribute("hidden");
+            setInterval(function () {
+                let element = document.getElementById("catchModal");
+                let hidden = element.getAttribute("hidden");
 
-            if (hidden){
-                element.removeAttribute("hidden")
-            } else {
-                element.setAttribute("hidden", "hidden");
-            }
-        }, 30000);
-    })
-</script>
+                if (hidden) {
+                    element.removeAttribute("hidden")
+                } else {
+                    element.setAttribute("hidden", "hidden");
+                }
+            }, 30000);
+        })
+    </script>
+</div>
 {% endblock%}
