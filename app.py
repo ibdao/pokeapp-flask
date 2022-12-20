@@ -106,8 +106,11 @@ def homepage():
     """Homepage of site; redirect to register."""
     if g.user:
         pokemons = (Pokemon.query.filter(Pokemon.user_id == g.user.id).all())
-
-        return render_template('home.html', pokemons=pokemons)
+        pokemon_exp = [mon.exp for mon in pokemons]
+        for n in pokemon_exp:
+            g.user.total_exp += n
+        
+        return render_template('home.html', pokemons=pokemons[::-1])
     else:
         return render_template('home-anon.html')
 
@@ -130,7 +133,10 @@ def catch():
         id=pokemon_data["id"],
         name=pokemon_data["name"],
         exp=pokemon_data["base_experience"],
+        sprite=pokemon_data["sprites"]["front_default"]
     )
+
+
     
     db.session.add(pokemon)
     g.user.pokemons.append(pokemon)

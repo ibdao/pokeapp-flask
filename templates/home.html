@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1 class="welcome-msg">Welcome {{ g.user.username }}</h1>
+<h1 class="welcome-msg">Welcome {{ g.user.username }} </h1>
+<h6 class="player-exp">Total Exp: {{ g.user.total_exp }}</h6>
 <div class="catch-modal" id="catchModal">
     <div class="modal-header">
         <div class="modal-title">A wild pokemon appeared</div>
@@ -9,10 +10,10 @@
 </div>
 <div class="pokemon-list">
     {% if g.user.pokemons | length > 0%}
-    <h4>{{g.user.username}} has caught these pokemon</h4>
+    <h4>{{ g.user.username }} has caught these pokemon</h4>
     <ul>
         {% for mon in pokemons %}
-        <li>{{ mon.name.capitalize() }} ------- Exp gained: {{ mon.exp }}</li>
+        <li>{{ mon.name.capitalize() }}<img src="{{ mon.sprite }}"> ------- Exp gained: {{ mon.exp }}</li>
         {% endfor %}
     </ul>
     {% else %}
@@ -38,7 +39,7 @@
             } else {
                 element.setAttribute("hidden", "hidden");
             }
-        }, 3000);
+        }, 30000);
     })
 </script>
 {% endblock%}

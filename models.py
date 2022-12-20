@@ -91,6 +91,10 @@ class Pokemon(db.Model):
         db.ForeignKey('users.id', ondelete='CASCADE')
     )
 
+    sprite = db.Column(
+        db.Text
+    )
+
 
 
 
