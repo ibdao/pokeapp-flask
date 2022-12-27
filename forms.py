@@ -7,11 +7,10 @@ class CSRFProtection(FlaskForm):
 
 class UserAddForm(FlaskForm):
     """Form for adding users"""
-
     username = StringField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
 
 class LoginForm(FlaskForm):
     """Form for logging in users"""
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
+    username = StringField('Username', validators=[])
+    password = PasswordField('Password', validators=[])

@@ -20,7 +20,18 @@
 }
 
 body {
-   background-image: url("https://wallpaperaccess.com/full/201993.jpg");
-   width: 100%;
-   height: 100%;
+  background-image: url("https://wallpaperaccess.com/full/201993.jpg");
+  width: 100%;
+  height: 100%;
+}
+
+ul{
+  columns: 3;
+  list-style-type: none;
+}
+
+.pokemon-info{
+  font-weight:bold;
+  font-size: medium;
+  color:brown;
 }

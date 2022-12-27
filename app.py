@@ -48,7 +48,6 @@ def do_login(user):
     """Login user"""
     session[CURR_USER] = user.id
 
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """Handle user login and redirect to homepage on success"""

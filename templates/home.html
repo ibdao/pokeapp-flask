@@ -3,7 +3,7 @@
 <div class="home">
     <h1 class="welcome-msg">Welcome {{ g.user.username }} </h1>
     <h6 class="player-exp">Total Exp: {{ g.user.total_exp }}</h6>
-    <div class="catch-modal" id="catchModal">
+    <div class="catch-modal" id="catchModal" hidden="hidden">
         <div class="modal-header">
             <div class="modal-title">A wild pokemon appeared</div>
             <a href="/catch" class="btn btn-outline-success"> Catch! </a>
@@ -14,7 +14,7 @@
         <h4>{{ g.user.username }} has caught these pokemon</h4>
         <ul>
             {% for mon in pokemons %}
-            <li>{{ mon.name.capitalize() }}<img src="{{ mon.sprite }}"> ------- Exp gained: {{ mon.exp }}</li>
+            <li class="pokemon-info">{{ mon.name.capitalize() }}<img src="{{ mon.sprite }}">---- Exp gained: {{ mon.exp }}</li>
             {% endfor %}
         </ul>
         {% else %}
@@ -22,7 +22,8 @@
         {% endif %}
     </div>
     {% endblock %}
-    {% block script %}
+</div>
+{% block script %}
     <script>
         /** Toggles the opportunity to catch pokemon 
          *  Basically just hides and shows the catch modal
@@ -30,11 +31,9 @@
         */
         $(document).ready(function () {
             console.log("window is loaded");
-
             setInterval(function () {
                 let element = document.getElementById("catchModal");
                 let hidden = element.getAttribute("hidden");
-
                 if (hidden) {
                     element.removeAttribute("hidden")
                 } else {
@@ -43,5 +42,4 @@
             }, 15000);
         })
     </script>
-</div>
-{% endblock%}
+{% endblock %}
